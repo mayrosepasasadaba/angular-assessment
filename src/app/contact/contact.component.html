@@ -1,0 +1,15 @@
+<main>
+  <div class="toggle-icons">
+    <button (click)="onSelectView('card')">
+      <span class="material-symbols-outlined" [ngClass]="{'active': isCardView()}">grid_view</span>
+    </button>
+    <button (click)="onSelectView('table')">
+      <span class="material-symbols-outlined" [ngClass]="{'active': !isCardView()}">table</span>
+    </button>
+  </div>
+  <div class="contact-card-container" *ngIf="isCardView()">
+    @for(cont of allContacts; track cont.id) {
+        <app-contact-card [contactInfo]="cont"/>
+    }
+  </div>
+</main>

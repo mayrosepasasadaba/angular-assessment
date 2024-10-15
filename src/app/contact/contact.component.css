@@ -1,0 +1,29 @@
+main {
+    margin-top: 1rem;
+}
+
+.toggle-icons {
+    display: flex;
+    justify-content: end;
+    gap: 1em;
+
+    button {
+        background-color: transparent;
+        border: none;
+    }
+
+    .material-symbols-outlined {
+        color: rgb(45, 41, 41);
+        font-size: 2vw;
+    }
+}
+
+.active {
+    color: rgb(211, 207, 207) !important;
+}
+
+.contact-card-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(20em, 1fr));
+    grid-gap: 20px;
+}

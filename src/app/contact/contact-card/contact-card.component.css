@@ -1,0 +1,33 @@
+.contact-card {
+  border: 1px solid #ccc;
+  padding: 6%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 0.5em;
+}
+
+.contact-header {
+  display: flex;
+  justify-content: space-between;
+
+  p {
+    margin: 0;
+  }
+}
+
+.contact-name {
+  font-weight: bold;
+}
+
+.mt-1 {
+  margin-top: 1em;
+}
+
+.action-buttons {
+  display: flex;
+    justify-content: end;
+    gap: 1em;
+
+    .material-symbols-outlined {
+        font-size: 1em;
+    }
+}
