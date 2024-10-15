@@ -1,0 +1,25 @@
+<div class="backdrop" (click)="onCancel()"></div>
+<dialog open>
+  <form [formGroup]="form" onsubmit="onSubmit()">
+    <div class="vertical">
+      <label for="name">Name</label>
+      <input id="name" formControlName="name" />
+    </div>
+
+    <div class="vertical">
+      <label for="contact_no">Contact Number</label>
+      <input type="number" id="contact_no" formControlName="contact_no" />
+    </div>
+
+    <div class="vertical">
+      <label for="email">Email Address</label>
+      <input id="email" type="email" formControlName="email" />
+      <span class="control-error" *ngIf="isInvalid('email')">Please enter a valid email address.</span>
+    </div>
+
+    <div style="display: flex; justify-content: space-between;">
+      <button (click)="onCancel()" class="cancel-button">Cancel</button>
+      <button (click)="onSubmit()" class="save-button">Save Changes</button>
+    </div>
+  </form>
+</dialog>

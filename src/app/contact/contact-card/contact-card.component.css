@@ -27,7 +27,12 @@
     justify-content: end;
     gap: 1em;
 
+    button {
+      background-color: transparent;
+      border: none;
+    }
+
     .material-symbols-outlined {
-        font-size: 1em;
+        font-size: 1.4em;
     }
 }

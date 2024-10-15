@@ -2,10 +2,14 @@
   <div class="contact-header">
     <span class="contact-name">{{ contactInfo().name }}</span>
     <p class="action-buttons">
-      <span class="material-symbols-outlined"> edit </span>
-      <span class="material-symbols-outlined"> delete </span>
+      <button>
+        <span class="material-symbols-outlined"> edit </span>
+      </button>
+      <button>
+        <span class="material-symbols-outlined"> delete </span>
+      </button>
     </p>
   </div>
   <div class="mt-1">{{ contactInfo().email }}</div>
-  <div class="mt-1">{{ contactInfo().phone }}</div>
+  <div class="mt-1">{{ contactInfo().contact_no }}</div>
 </div>

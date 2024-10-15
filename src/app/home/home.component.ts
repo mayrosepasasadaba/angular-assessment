@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output, signal } from '@angular/core';
 import { ContactComponent } from "../contact/contact.component";
 
 @Component({
@@ -9,5 +9,9 @@ import { ContactComponent } from "../contact/contact.component";
   styleUrl: './home.component.css'
 })
 export class HomeComponent {
-
+  openAddContact = true;
+  
+  onOpenAddContact() {
+    this.openAddContact=true;
+  }
 }
