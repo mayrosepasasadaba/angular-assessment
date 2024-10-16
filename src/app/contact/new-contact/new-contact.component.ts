@@ -88,11 +88,11 @@ export class NewContactComponent implements OnInit {
 
   onSubmit() {
     if (this.action==="add") {
-      this.contactsService.addTask(this.form.value)
+      this.contactsService.addContact(this.form.value)
       this.form.reset();
       this.close.emit();
     } else {
-      this.contactsService.editTask(this.form.value, this.defaultValues.id)
+      this.contactsService.editContact(this.form.value, this.defaultValues.id)
       this.form.reset();
       this.close.emit();
     }

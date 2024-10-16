@@ -1,10 +1,11 @@
 import { Component, EventEmitter, input, Output } from '@angular/core';
 import { Contact } from '../contact.model';
+import { RouterLink, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-contact-card',
   standalone: true,
-  imports: [],
+  imports: [RouterLink, RouterOutlet],
   templateUrl: './contact-card.component.html',
   styleUrl: './contact-card.component.css'
 })

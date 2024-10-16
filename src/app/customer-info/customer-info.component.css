@@ -1,0 +1,21 @@
+.row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  button {
+    background-color: transparent;
+    border: none;
+  }
+
+  .container {
+    border: 1px solid var(--medium-gray);
+    border-radius: 0.5em;
+    padding: 4%;
+
+    .info-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+  }

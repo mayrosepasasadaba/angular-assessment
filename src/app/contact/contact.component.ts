@@ -4,7 +4,7 @@ import { ContactCardComponent } from "./contact-card/contact-card.component";
 import { NgClass, NgFor, NgIf } from '@angular/common';
 import { NewContactComponent } from "./new-contact/new-contact.component";
 import { Contact } from './contact.model';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-contact',
@@ -17,6 +17,8 @@ import { Observable } from 'rxjs';
 export class ContactComponent {
 
   private contactsService = inject(ContactsService);
+  private contactsSubscription: Subscription | undefined;
+  
   openAddContact = signal(false);
   action = signal<string>('add');
   defaultFormValues = signal<Contact>({
@@ -27,8 +29,16 @@ export class ContactComponent {
   })
 
   isCardView = signal(true);
-  // allContacts = this.contactsService.getAllContacts();
   allContacts = this.contactsService.allContacts();
+
+  ngOnInit(): void {
+    // Subscribe to the contacts$ observable to get real-time updates
+    this.contactsSubscription = this.contactsService.contacts$.subscribe(
+      (updatedContacts) => {
+        this.allContacts = updatedContacts;
+      }
+    );
+  }
 
   onSelectView(type: string) {
     if (type==='card') {
@@ -59,6 +69,6 @@ export class ContactComponent {
   }
 
   onDeleteCard(info: Contact) {
-    this.contactsService.deleteTask(info.id)
+    this.contactsService.deleteContact(info.id)
   }
 }
