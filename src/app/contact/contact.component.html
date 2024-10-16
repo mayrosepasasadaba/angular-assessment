@@ -9,7 +9,7 @@
   </div>
   <div class="contact-card-container" *ngIf="isCardView()">
     @for(cont of allContacts; track cont.id) {
-        <app-contact-card [contactInfo]="cont"/>
+        <app-contact-card [contactInfo]="cont" (edit)="onEditCard(cont)" (delete)="onDeleteCard(cont)"/>
     }
   </div>
 
@@ -46,6 +46,6 @@
   </div>
   
   @if(openAddContact()) {
-    <app-new-contact (close)="onCloseAddContact()"/>
+    <app-new-contact (close)="onCloseAddContact()" [action]="action()" [defaultValues]="defaultFormValues()"/>
   }
 </main>

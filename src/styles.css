@@ -19,6 +19,13 @@ body {
 :root {
     --primary-color: #460073;
     --secondary-color: #a100ff;
+    --light-gray: #e5e5e5;
+    --medium-gray: #cccccc;
+    --dark-gray: #a59da5;
+}
+
+button {
+    font-size: 10pt;
 }
 
 button:hover {
@@ -37,7 +44,19 @@ button:hover {
     border-color: var(--secondary-color);
 }
 
+.save-button:disabled {
+    cursor:not-allowed;
+    background-color: var(--light-gray);
+    color: black;
+    border: 1px solid var(--light-gray);
+}
+
 .control-error {
     color: red;
     margin-top: 1%;
+}
+
+input {
+    border-radius: 0.4rem;
+    border: 1.5px solid var(--medium-gray) !important;
 }

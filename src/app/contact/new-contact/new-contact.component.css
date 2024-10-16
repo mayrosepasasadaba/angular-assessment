@@ -1,6 +1,8 @@
 .backdrop {
-    background-color: rgba(0, 0, 0, 0.9);
+    /* background-color: rgba(0, 0, 0, 0.9); */
+    background-color: #504c4c;
     position: fixed;
+    opacity: 90%;
     top: 0;
     left: 0;
     width: 100%;
@@ -8,15 +10,15 @@
   }
   
   dialog {
-    width: 90%;
-    max-width: 30rem;
+    width: 100%;
+    max-width: 20rem;
     background-color: white;
     border-radius: 6px;
     border: none;
     box-shadow: 0 1px 6px rgba(0, 0, 0, 0.4);
     overflow: hidden;
-    padding: 1rem;
-    top: 5rem;
+    padding: 1.5rem;
+    top: 7rem;
   }
 
   form {
@@ -30,11 +32,11 @@
 
     label {
       margin-bottom: 0.5rem;
+      font-weight: bolder;
     }
+    
     input {
-      border-radius: 0.2rem;
-      border: 1px solid gray;
-      padding: 3%;
+      padding: 4% 3%;
     }
   }
   

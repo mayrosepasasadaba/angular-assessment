@@ -3,6 +3,7 @@ import { ContactsService } from './contact.service';
 import { ContactCardComponent } from "./contact-card/contact-card.component";
 import { NgClass, NgIf } from '@angular/common';
 import { NewContactComponent } from "./new-contact/new-contact.component";
+import { Contact } from './contact.model';
 
 @Component({
   selector: 'app-contact',
@@ -13,13 +14,17 @@ import { NewContactComponent } from "./new-contact/new-contact.component";
 })
 export class ContactComponent {
   private contactsService = inject(ContactsService);
-  // openAddContact = input()
-  // @Input() openAddContact: boolean | undefined;
   openAddContact = model.required<boolean>();
+  action = signal<string>('add');
+  defaultFormValues = signal<Contact>({
+    id: '',
+    name: '',
+    email: '',
+    contact_no: ''
+  })
 
   allContacts = this.contactsService.allContacts();
-  isCardView = signal(false);
-  // openAddContact = signal(true);
+  isCardView = signal(true);
 
   onSelectView(type: string) {
     if (type==='card') {
@@ -34,6 +39,23 @@ export class ContactComponent {
   }
 
   onCloseAddContact() {
+    this.defaultFormValues.set({
+      id: '',
+      name: '',
+      email: '',
+      contact_no: ''
+    })
     this.openAddContact.set(false)
+  }
+
+  onEditCard(info: Contact) {
+    this.defaultFormValues.set(info)
+    this.action.set('edit')
+    this.openAddContact.set(true);
+  }
+
+  onDeleteCard(info: Contact) {
+    console.log(info)
+    alert("DELETE ID: "+info.id)
   }
 }

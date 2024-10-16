@@ -2,10 +2,10 @@
   <div class="contact-header">
     <span class="contact-name">{{ contactInfo().name }}</span>
     <p class="action-buttons">
-      <button>
+      <button (click)="onEdit()">
         <span class="material-symbols-outlined"> edit </span>
       </button>
-      <button>
+      <button (click)="onDelete()">
         <span class="material-symbols-outlined"> delete </span>
       </button>
     </p>
