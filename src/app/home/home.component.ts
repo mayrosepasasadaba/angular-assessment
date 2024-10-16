@@ -9,7 +9,7 @@ import { ContactComponent } from "../contact/contact.component";
   styleUrl: './home.component.css'
 })
 export class HomeComponent {
-  openAddContact = true;
+  openAddContact = false;
   
   onOpenAddContact() {
     this.openAddContact=true;
