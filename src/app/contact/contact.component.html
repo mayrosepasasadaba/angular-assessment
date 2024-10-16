@@ -1,4 +1,12 @@
 <main>
+  <!-- <main> -->
+    <h3>Contacts Information</h3>
+    <div class="container">
+        <p>Your list of contacts appear here. To add a new contact, click on the Add New Contact button.</p>
+        <button (click)="onOpenAddContact()">Add New Contact</button>
+    </div>
+    <!-- <app-contact [(openAddContact)]="openAddContact"  /> -->
+<!-- </main> -->
   <div class="toggle-icons">
     <button (click)="onSelectView('card')">
       <span class="material-symbols-outlined" [ngClass]="{'active': isCardView()}">grid_view</span>
@@ -31,10 +39,10 @@
             <td>{{cont.email}}</td>
             <td>
               <span class="action-buttons">
-                <button>
+                <button (click)="onEditCard(cont)">
                   <span class="material-symbols-outlined"> edit </span>
                 </button>
-                <button>
+                <button (click)="onDeleteCard(cont)">
                   <span class="material-symbols-outlined"> delete </span>
                 </button>
               </span>

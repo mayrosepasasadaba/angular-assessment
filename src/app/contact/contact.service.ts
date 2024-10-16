@@ -1,8 +1,11 @@
 import { Injectable, signal } from "@angular/core";
+import { Contact, NewContact } from "./contact.model";
+import { BehaviorSubject } from "rxjs";
 
 @Injectable({providedIn: 'root'})
 export class ContactsService {
-    private contacts = signal([
+
+    private contacts = signal<Contact[]>([
         {
           id: 1,
           name: 'Jay Contreras',
@@ -58,6 +61,55 @@ export class ContactsService {
           contact_no: '09174441234'
         }
       ])
-
       allContacts = this.contacts.asReadonly();
+
+      contacts$ = new BehaviorSubject<Contact[]>([]);
+
+    constructor() {
+      const tempContacts = localStorage.getItem('contacts')
+
+      if (tempContacts) {
+        this.contacts.set(JSON.parse(tempContacts))
+      }
+    } 
+
+    getAllContacts() {
+      return this.contacts();
+    }
+
+    addTask(info: NewContact) {
+      const tempData = [...this.contacts()]
+      tempData.push({
+        id: Math.random(),
+        ...info
+      })
+
+      this.contacts.set(tempData);
+      this.contacts$.next(this.contacts());
+      localStorage.setItem('contacts', JSON.stringify(tempData))
+    }
+
+    editTask(info: Contact, id: string|number) {
+      const tempData = [...this.contacts()]
+      const index = tempData.findIndex(contact => contact.id === id)
+      tempData[index] = info;
+      
+      this.contacts.set(tempData);
+      this.contacts$.next(this.contacts());
+      localStorage.setItem('contacts', JSON.stringify(tempData))
+    }
+
+    deleteTask(id: string|number) {
+      const tempData = [...this.contacts()]
+      const newData = tempData.filter((data) => data.id !== id)
+
+      this.contacts.set(tempData);
+      this.contacts$.next(this.contacts());
+      localStorage.setItem('contacts', JSON.stringify(newData))
+    }
+
+    updateLocalStorage() {
+
+    }
+      
 }

@@ -4,3 +4,9 @@ export interface Contact {
     email: string,
     contact_no: string,
 }
+
+export interface NewContact {
+    name: string,
+    email: string,
+    contact_no: string,
+}

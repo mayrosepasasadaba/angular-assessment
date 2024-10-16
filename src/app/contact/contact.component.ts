@@ -1,20 +1,23 @@
-import { Component, inject, Input, input, model, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, Input, input, model, signal } from '@angular/core';
 import { ContactsService } from './contact.service';
 import { ContactCardComponent } from "./contact-card/contact-card.component";
-import { NgClass, NgIf } from '@angular/common';
+import { NgClass, NgFor, NgIf } from '@angular/common';
 import { NewContactComponent } from "./new-contact/new-contact.component";
 import { Contact } from './contact.model';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-contact',
   standalone: true,
-  imports: [ContactCardComponent, NgIf, NgClass, NewContactComponent],
+  imports: [ContactCardComponent, NgIf, NgClass, NgFor, NewContactComponent],
   templateUrl: './contact.component.html',
-  styleUrl: './contact.component.css'
+  styleUrl: './contact.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ContactComponent {
+
   private contactsService = inject(ContactsService);
-  openAddContact = model.required<boolean>();
+  openAddContact = signal(false);
   action = signal<string>('add');
   defaultFormValues = signal<Contact>({
     id: '',
@@ -23,8 +26,9 @@ export class ContactComponent {
     contact_no: ''
   })
 
-  allContacts = this.contactsService.allContacts();
   isCardView = signal(true);
+  // allContacts = this.contactsService.getAllContacts();
+  allContacts = this.contactsService.allContacts();
 
   onSelectView(type: string) {
     if (type==='card') {
@@ -55,7 +59,6 @@ export class ContactComponent {
   }
 
   onDeleteCard(info: Contact) {
-    console.log(info)
-    alert("DELETE ID: "+info.id)
+    this.contactsService.deleteTask(info.id)
   }
 }

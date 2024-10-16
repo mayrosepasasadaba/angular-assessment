@@ -1,7 +1,8 @@
 import { NgIf } from '@angular/common';
-import { Component, EventEmitter, Input, input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Input, input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { Contact } from '../contact.model';
+import { ContactsService } from '../contact.service';
 
 
 // digits only validator for contact number
@@ -32,6 +33,8 @@ export class NewContactComponent implements OnInit {
   @Input({required: true}) action? : string;
   @Input({required: true}) defaultValues! : Contact;
 
+  private contactsService = inject(ContactsService)
+
   form!: FormGroup;
 
   ngOnInit() {
@@ -56,7 +59,6 @@ export class NewContactComponent implements OnInit {
     }
     this.form.get('contact_no')?.setValue(input.value, { emitEvent: false });
   }
-
 
   // generic validity checker
   get isInvalid() {
@@ -86,9 +88,13 @@ export class NewContactComponent implements OnInit {
 
   onSubmit() {
     if (this.action==="add") {
-      alert("ADD")
+      this.contactsService.addTask(this.form.value)
+      this.form.reset();
+      this.close.emit();
     } else {
-      alert("EDIT")
+      this.contactsService.editTask(this.form.value, this.defaultValues.id)
+      this.form.reset();
+      this.close.emit();
     }
   }
 }

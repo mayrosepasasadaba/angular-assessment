@@ -1,3 +1,5 @@
+
+
 main {
   margin-top: 1rem;
 }
@@ -6,6 +8,7 @@ main {
   display: flex;
   justify-content: end;
   gap: 1em;
+  margin-top: 1rem;
 
   button {
     background-color: transparent;
@@ -57,5 +60,34 @@ th {
 
   .material-symbols-outlined {
     font-size: 1.2em;
+  }
+}
+
+/* ORIGINALLY FROM HOME */
+.container {
+  display: grid;
+  grid-template-columns: 6fr 1fr;
+  align-items: center;
+
+  button {
+    background: var(--secondary-color);
+    color: white;
+    padding: 5% 0;
+    width: 100%;
+    justify-self: end;
+    border-radius: 2em;
+    border: none;
+    font-weight: bolder;
+  }
+}
+
+@media (max-width: 412px) {
+  .container {
+      grid-template-columns: 2fr 1fr;
+  }
+
+  button {
+      width: 90%;
+      /* font-size: 5pt !important; */
   }
 }
