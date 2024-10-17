@@ -9,15 +9,15 @@
     <div class="row info-row">
       <div>
         <span>First Name</span>
-        <h4>{{userInfo().name}}</h4>
+        <h4>{{userInfo()?.name}}</h4>
       </div>
       <div>
         <span>Email Address</span>
-        <h4>Jay</h4>
+        <h4>{{userInfo()?.email}}</h4>
       </div>
       <div>
         <span>Contact Number</span>
-        <h4>Jay</h4>
+        <h4>{{userInfo()?.contact_no}}</h4>
       </div>
     </div>
   </article>

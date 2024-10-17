@@ -20,7 +20,7 @@ export class ContactsService {
   private getDefaultContacts(): Contact[] {
     return [
       {
-        id: 1,
+        id: "1",
         name: 'Jay Contreras',
         email: 'kamikazeegod@gmail.com',
         contact_no: '09171234567',
@@ -32,43 +32,43 @@ export class ContactsService {
         contact_no: '09206002222',
       },
       {
-        id: 3,
+        id: "2",
         name: 'Mikki Jill',
         email: 'keyboardista@gmail.com',
         contact_no: '09206002222',
       },
       {
-        id: 4,
+        id: "3",
         name: 'Jose Luis Linao',
         email: 'kamikazeeprince@gmail.com',
         contact_no: '09171234456',
       },
       {
-        id: 5,
+        id: "4",
         name: 'Allan Burdeos',
         email: 'allan_burdeos@gmail.com',
         contact_no: '09176666666',
       },
       {
-        id: 6,
+        id: "5",
         name: 'Mark Estacio',
         email: 'mark_estacio@gmail.com',
         contact_no: '09176666666',
       },
       {
-        id: 7,
+        id: "6",
         name: 'Jianelli Lubiano',
         email: 'kamikazeeprincess@gmail.com',
         contact_no: '09178887777',
       },
       {
-        id: 8,
+        id: "7",
         name: 'Led Zeppelin Tuyay',
         email: 'led_zt@gmail.com',
         contact_no: '09174441234',
       },
       {
-        id: 9,
+        id: "8",
         name: 'Sep Rono',
         email: 'sep_of_typecast@gmail.com',
         contact_no: '09174441234',
@@ -108,7 +108,7 @@ export class ContactsService {
     this.updateContacts(updatedContacts);
   }
 
-  getContactInfo(id: string | number): Contact | undefined {
+  getContactInfo(id: string) {
     const info = this.contacts().find((data) => data.id === id);
     return info;
   }
