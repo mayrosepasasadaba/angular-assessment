@@ -13,4 +13,8 @@ export class CustomerInfoComponent {
   private contactsService = inject(ContactsService);
   contactId = input.required<string>();
   userInfo = computed(() => this.contactsService.getContactInfo(this.contactId()))
+
+  formatContactNumber(value: string|null|undefined) {
+    return this.contactsService.formatContactNumber(value)
+  }
 }

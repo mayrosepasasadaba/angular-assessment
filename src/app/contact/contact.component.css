@@ -4,6 +4,10 @@ main {
   margin-top: 1rem;
 }
 
+h2 {
+  margin: 0;
+}
+
 .toggle-icons {
   display: flex;
   justify-content: end;
@@ -29,6 +33,7 @@ main {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(20em, 1fr));
   grid-gap: 20px;
+  overflow-y: scroll;
 }
 
 table {
@@ -79,6 +84,8 @@ th {
     border: none;
     font-weight: bolder;
   }
+
+  
 }
 
 @media (max-width: 412px) {

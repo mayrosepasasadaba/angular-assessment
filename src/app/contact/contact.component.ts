@@ -5,6 +5,7 @@ import { NgClass, NgFor, NgIf } from '@angular/common';
 import { NewContactComponent } from "./new-contact/new-contact.component";
 import { Contact } from './contact.model';
 import { Observable, Subscription } from 'rxjs';
+import { AlertService } from '../shared/alert/alert.service';
 
 @Component({
   selector: 'app-contact',
@@ -17,7 +18,8 @@ import { Observable, Subscription } from 'rxjs';
 export class ContactComponent {
 
   private contactsService = inject(ContactsService);
-  private contactsSubscription: Subscription | undefined;
+  private alertService = inject(AlertService);
+  
   
   openAddContact = signal(false);
   action = signal<string>('add');
@@ -33,7 +35,7 @@ export class ContactComponent {
 
   ngOnInit(): void {
     // Subscribe to the contacts$ observable to get real-time updates
-    this.contactsSubscription = this.contactsService.contacts$.subscribe(
+    this.contactsService.contacts$.subscribe(
       (updatedContacts) => {
         this.allContacts = updatedContacts;
       }
@@ -49,7 +51,9 @@ export class ContactComponent {
   }
 
   onOpenAddContact() {
-    this.openAddContact.set(true)
+    this.alertService.showAlert("Successfully added a new contact!", "error")
+    // this.action.set('add')
+    // this.openAddContact.set(true);
   }
 
   onCloseAddContact() {

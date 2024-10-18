@@ -1,0 +1,18 @@
+@if (message()) {
+<div
+  class="alert"
+  class={{alertType()}}
+  [ngClass]="{
+    'fade-in': isVisible,
+    'fade-out': !isVisible
+  }"
+>
+  <span *ngIf="alertType() === 'success'" class="material-symbols-outlined">
+    check
+  </span>
+  <span *ngIf="alertType() === 'error'" class="material-symbols-outlined">
+    error
+  </span>
+  <span>{{ message() }}</span>
+</div>
+}

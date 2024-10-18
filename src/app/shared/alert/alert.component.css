@@ -1,0 +1,35 @@
+.alert {
+  position: fixed;
+  bottom: 3%;
+  right: 3%;
+  border-radius: 0.5em;
+  width: auto;
+  display: flex;
+  align-items: center;
+  gap: 1em;
+  padding: 0.5% 1%;
+
+    .material-symbols-outlined {
+      font-size: 1.5vw;
+    }
+
+  &.success {
+    background-color: #7ef3ce;
+    color: black;
+  }
+
+  &.error {
+    background-color: #f8d7da;
+    color: #721c24;
+  }
+
+  .close-button {
+    background: none;
+    border: none;
+    font-size: 16px;
+    position: absolute;
+    right: 8px;
+    top: 8px;
+    cursor: pointer;
+  }
+}
