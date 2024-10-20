@@ -6,11 +6,12 @@ import { NewContactComponent } from "./new-contact/new-contact.component";
 import { Contact } from './contact.model';
 import { Observable, Subscription } from 'rxjs';
 import { AlertService } from '../shared/alert/alert.service';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-contact',
   standalone: true,
-  imports: [ContactCardComponent, NgIf, NgClass, NgFor, NewContactComponent],
+  imports: [ContactCardComponent, NgIf, NgClass, NgFor, NewContactComponent, RouterLink],
   templateUrl: './contact.component.html',
   styleUrl: './contact.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -20,18 +21,17 @@ export class ContactComponent {
   private contactsService = inject(ContactsService);
   private alertService = inject(AlertService);
   
-  
   openAddContact = signal(false);
-  action = signal<string>('add');
+  action = signal<'add'|'edit'>('add');
+  isCardView = signal(true);
+  allContacts = this.contactsService.allContacts();
   defaultFormValues = signal<Contact>({
     id: '',
     name: '',
     email: '',
     contact_no: ''
   })
-
-  isCardView = signal(true);
-  allContacts = this.contactsService.allContacts();
+  
 
   ngOnInit(): void {
     // Subscribe to the contacts$ observable to get real-time updates
@@ -42,7 +42,8 @@ export class ContactComponent {
     );
   }
 
-  onSelectView(type: string) {
+  // selects between card view or table view
+  onSelectViewType(type: string) {
     if (type==='card') {
       this.isCardView.set(true)
     } else {
@@ -50,12 +51,13 @@ export class ContactComponent {
     }
   }
 
+  // function to open add modal
   onOpenAddContact() {
-    this.alertService.showAlert("Successfully added a new contact!", "error")
-    // this.action.set('add')
-    // this.openAddContact.set(true);
+    this.action.set('add');
+    this.openAddContact.set(true);
   }
 
+  // closes add modal; resets form values
   onCloseAddContact() {
     this.defaultFormValues.set({
       id: '',
@@ -66,13 +68,16 @@ export class ContactComponent {
     this.openAddContact.set(false)
   }
 
+  // opens edit form modal; set default values of form to selected info
   onEditCard(info: Contact) {
     this.defaultFormValues.set(info)
     this.action.set('edit')
     this.openAddContact.set(true);
   }
 
+  // function to delete contact info
   onDeleteCard(info: Contact) {
-    this.contactsService.deleteContact(info.id)
+    this.contactsService.deleteContact(info.id);
+    this.alertService.showAlert("Successfully deleted contact!", "success");
   }
 }

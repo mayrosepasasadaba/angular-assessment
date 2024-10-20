@@ -4,7 +4,6 @@ import { Page404Component } from './page-404/page-404.component';
 import { CustomerInfoComponent } from './customer-info/customer-info.component';
 
 export const routes: Routes = [
-    
     {
         path: '',
         redirectTo: 'home',

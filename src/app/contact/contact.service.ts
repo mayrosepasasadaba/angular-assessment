@@ -4,13 +4,11 @@ import { BehaviorSubject } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class ContactsService {
-  private contacts = signal<Contact[]>(this.loadContactsFromLocalStorage());
+  private contacts = signal<Contact[]>(this.getInitialContacts());
   allContacts = this.contacts.asReadonly();
   contacts$ = new BehaviorSubject<Contact[]>(this.contacts());
 
-  // constructor() {}
-
-  private loadContactsFromLocalStorage(): Contact[] {
+  private getInitialContacts(): Contact[] {
     const savedContacts = localStorage.getItem('contacts');
     return savedContacts
       ? JSON.parse(savedContacts)

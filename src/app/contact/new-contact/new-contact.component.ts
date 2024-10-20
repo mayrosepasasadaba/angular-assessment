@@ -3,6 +3,7 @@ import { Component, EventEmitter, inject, Input, input, OnInit, Output } from '@
 import { AbstractControl, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { Contact } from '../contact.model';
 import { ContactsService } from '../contact.service';
+import { AlertService } from '../../shared/alert/alert.service';
 
 
 // digits only validator for contact number
@@ -33,7 +34,8 @@ export class NewContactComponent implements OnInit {
   @Input({required: true}) action? : string;
   @Input({required: true}) defaultValues! : Contact;
 
-  private contactsService = inject(ContactsService)
+  private contactsService = inject(ContactsService);
+  private alertService = inject(AlertService);
 
   form!: FormGroup;
 
@@ -64,7 +66,6 @@ export class NewContactComponent implements OnInit {
   get isInvalid() {
     return (field: string) => {
       const control = this.form.controls[field as keyof typeof this.form.controls];
-      // const nonEmpty = control.value?.trim()!==""
       return control && control.touched && control.dirty && control.invalid;
     };
   }
@@ -88,13 +89,14 @@ export class NewContactComponent implements OnInit {
 
   onSubmit() {
     if (this.action==="add") {
-      this.contactsService.addContact(this.form.value)
-      this.form.reset();
-      this.close.emit();
+      this.contactsService.addContact(this.form.value);
+      this.alertService.showAlert("Successfully added a new contact!", "success");
     } else {
-      this.contactsService.editContact(this.form.value, this.defaultValues.id)
-      this.form.reset();
-      this.close.emit();
+      this.contactsService.editContact(this.form.value, this.defaultValues.id);
+      this.alertService.showAlert("Changes saved", "success");
     }
+
+    this.form.reset();
+    this.close.emit();
   }
 }

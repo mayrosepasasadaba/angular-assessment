@@ -10,14 +10,12 @@
     <div class="vertical">
       <label for="contact_no">Contact Number</label>
       <input id="contact_no" type="number" formControlName="contact_no" (input)="onContactNoInput($event)"/>
-      <!-- <span class="control-error" *ngIf="isInvalid('contact_no')">Please enter a contact number.</span> -->
       <span class="control-error" *ngIf="isInvalid('contact_no')">{{getErrorMessage("contact_no", "a contact number")}}</span>
     </div>
 
     <div class="vertical">
       <label for="email">Email Address</label>
       <input id="email" type="email" formControlName="email" />
-      <!-- <span class="control-error" *ngIf="isInvalid('email')">Please enter a valid Email address.</span> -->
       <span class="control-error" *ngIf="isInvalid('email')">{{getErrorMessage("email", "Email address")}}</span>
     </div>
 

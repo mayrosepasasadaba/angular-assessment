@@ -33,7 +33,6 @@ h2 {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(20em, 1fr));
   grid-gap: 20px;
-  overflow-y: scroll;
 }
 
 table {
@@ -53,6 +52,10 @@ th {
   color: white;
 }
 
+a {
+  color: black;
+}
+
 .action-buttons {
   display: flex;
   justify-content: center;
@@ -68,7 +71,6 @@ th {
   }
 }
 
-/* ORIGINALLY FROM HOME */
 .container {
   display: grid;
   grid-template-columns: 6fr 1fr;

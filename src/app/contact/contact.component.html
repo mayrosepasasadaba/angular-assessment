@@ -1,20 +1,18 @@
 <main>
-  <!-- <main> -->
     <h2>Contacts Information</h2>
     <div class="container">
         <p>Your list of contacts appear here. To add a new contact, click on the Add New Contact button.</p>
         <button (click)="onOpenAddContact()">Add New Contact</button>
     </div>
-    <!-- <app-contact [(openAddContact)]="openAddContact"  /> -->
-<!-- </main> -->
   <div class="toggle-icons">
-    <button (click)="onSelectView('card')">
+    <button (click)="onSelectViewType('card')">
       <span class="material-symbols-outlined" [ngClass]="{'active': isCardView()}">grid_view</span>
     </button>
-    <button (click)="onSelectView('table')">
+    <button (click)="onSelectViewType('table')">
       <span class="material-symbols-outlined" [ngClass]="{'active': !isCardView()}">table</span>
     </button>
   </div>
+  
   <div class="contact-card-container" *ngIf="isCardView()">
     @for(cont of allContacts; track cont.id) {
         <app-contact-card [contactInfo]="cont" (edit)="onEditCard(cont)" (delete)="onDeleteCard(cont)"/>
@@ -34,7 +32,7 @@
       <tbody>
         @for(cont of allContacts; track cont.id) {
           <tr>
-            <td><u>{{cont.name}}</u></td>
+            <td><a [routerLink]="['view', cont.id]" routerLinkActive="router-link-active" >{{cont.name}}</a></td>
             <td>{{cont.contact_no}}</td>
             <td>{{cont.email}}</td>
             <td>
