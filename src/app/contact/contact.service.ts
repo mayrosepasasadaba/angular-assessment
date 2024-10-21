@@ -2,78 +2,76 @@ import { Injectable, signal } from '@angular/core';
 import { Contact, NewContact } from './contact.model';
 import { BehaviorSubject } from 'rxjs';
 
+const defaultContacts = [
+  {
+    id: "1",
+    name: 'Jay Contreras',
+    email: 'kamikazeegod@gmail.com',
+    contact_no: '09171234567',
+  },
+  {
+    id: "2",
+    name: 'Jason Astete',
+    email: 'jason_the_menace@gmail.com',
+    contact_no: '09206002222',
+  },
+  {
+    id: "3",
+    name: 'Mikki Jill',
+    email: 'keyboardista@gmail.com',
+    contact_no: '09206002222',
+  },
+  {
+    id: "4",
+    name: 'Jose Luis Linao',
+    email: 'kamikazeeprince@gmail.com',
+    contact_no: '09171234456',
+  },
+  {
+    id: "5",
+    name: 'Allan Burdeos',
+    email: 'allan_burdeos@gmail.com',
+    contact_no: '09176666666',
+  },
+  {
+    id: "6",
+    name: 'Mark Estacio',
+    email: 'mark_estacio@gmail.com',
+    contact_no: '09176666666',
+  },
+  {
+    id: "7",
+    name: 'Jianelli Lubiano',
+    email: 'kamikazeeprincess@gmail.com',
+    contact_no: '09178887777',
+  },
+  {
+    id: "8",
+    name: 'Led Zeppelin Tuyay',
+    email: 'led_zt@gmail.com',
+    contact_no: '09174441234',
+  },
+  {
+    id: "9",
+    name: 'Sep Rono',
+    email: 'sep_of_typecast@gmail.com',
+    contact_no: '09174441234',
+  },
+]
+
 @Injectable({ providedIn: 'root' })
 export class ContactsService {
   private contacts = signal<Contact[]>(this.getInitialContacts());
   allContacts = this.contacts.asReadonly();
   contacts$ = new BehaviorSubject<Contact[]>(this.contacts());
 
+
   // function to fetch initial value of contacs array-- localstorage if populated otherwise, the hardcoded sample data
   private getInitialContacts(): Contact[] {
     const savedContacts = localStorage.getItem('contacts');
     return savedContacts
       ? JSON.parse(savedContacts)
-      : this.getDefaultContacts();
-  }
-
-  // sample data
-  private getDefaultContacts(): Contact[] {
-    return [
-      {
-        id: "1",
-        name: 'Jay Contreras',
-        email: 'kamikazeegod@gmail.com',
-        contact_no: '09171234567',
-      },
-      {
-        id: 2,
-        name: 'Jason Astete',
-        email: 'jason_the_menace@gmail.com',
-        contact_no: '09206002222',
-      },
-      {
-        id: "2",
-        name: 'Mikki Jill',
-        email: 'keyboardista@gmail.com',
-        contact_no: '09206002222',
-      },
-      {
-        id: "3",
-        name: 'Jose Luis Linao',
-        email: 'kamikazeeprince@gmail.com',
-        contact_no: '09171234456',
-      },
-      {
-        id: "4",
-        name: 'Allan Burdeos',
-        email: 'allan_burdeos@gmail.com',
-        contact_no: '09176666666',
-      },
-      {
-        id: "5",
-        name: 'Mark Estacio',
-        email: 'mark_estacio@gmail.com',
-        contact_no: '09176666666',
-      },
-      {
-        id: "6",
-        name: 'Jianelli Lubiano',
-        email: 'kamikazeeprincess@gmail.com',
-        contact_no: '09178887777',
-      },
-      {
-        id: "7",
-        name: 'Led Zeppelin Tuyay',
-        email: 'led_zt@gmail.com',
-        contact_no: '09174441234',
-      },
-      {
-        id: "8",
-        name: 'Sep Rono',
-        email: 'sep_of_typecast@gmail.com',
-        contact_no: '09174441234',
-      },
-    ];
+      : defaultContacts;
   }
 
   // function to update local storage
@@ -82,10 +80,10 @@ export class ContactsService {
   }
 
   // update the data contacts and observable after add, edit, and delete
-  private updateContacts(contacts: Contact[]): void {
-    this.contacts.set(contacts);
-    this.contacts$.next(contacts);
-    this.updateLocalStorage(contacts);
+  private updateContacts(updatedContacts: Contact[]): void {
+    this.contacts.set(updatedContacts);
+    this.contacts$.next(updatedContacts);
+    this.updateLocalStorage(updatedContacts);
   }
 
   // function to insert new data to the data array

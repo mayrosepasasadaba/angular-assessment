@@ -18,7 +18,7 @@ export class AlertService {
     this.isVisible$.next(true);
     setTimeout(() => {
       this.clearAlert()
-    }, 2000)
+    }, 3000)
   }
 
   clearAlert() {

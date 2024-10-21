@@ -1,10 +1,9 @@
-import { ChangeDetectionStrategy, Component, inject, Input, input, model, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { ContactsService } from './contact.service';
 import { ContactCardComponent } from "./contact-card/contact-card.component";
 import { NgClass, NgFor, NgIf } from '@angular/common';
 import { NewContactComponent } from "./new-contact/new-contact.component";
 import { Contact } from './contact.model';
-import { Observable, Subscription } from 'rxjs';
 import { AlertService } from '../shared/alert/alert.service';
 import { RouterLink } from '@angular/router';
 
@@ -70,14 +69,14 @@ export class ContactComponent {
 
   // opens edit form modal; set default values of form to selected info
   onEditContact(info: Contact) {
-    this.defaultFormValues.set(info)
-    this.action.set('edit')
+    this.defaultFormValues.set(info);
+    this.action.set('edit');
     this.openFormModal.set(true);
   }
 
   // function to delete contact info
   onDeleteContact(info: Contact) {
-    this.contactsService.deleteContact(info.id);
+    this.contactsService.deleteContact(info.id); 
     this.alertService.showAlert("Successfully deleted contact!", "success");
   }
 }
