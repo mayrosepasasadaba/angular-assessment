@@ -2,7 +2,7 @@
     <h2>Contacts Information</h2>
     <div class="container">
         <p>Your list of contacts appear here. To add a new contact, click on the Add New Contact button.</p>
-        <button (click)="onOpenAddContact()">Add New Contact</button>
+        <button (click)="onOpenFormModal()">Add New Contact</button>
     </div>
   <div class="toggle-icons">
     <button (click)="onSelectViewType('card')">
@@ -15,7 +15,7 @@
   
   <div class="contact-card-container" *ngIf="isCardView()">
     @for(cont of allContacts; track cont.id) {
-        <app-contact-card [contactInfo]="cont" (edit)="onEditCard(cont)" (delete)="onDeleteCard(cont)"/>
+        <app-contact-card [contactInfo]="cont" (edit)="onEditContact(cont)" (delete)="onDeleteContact(cont)"/>
     }
   </div>
 
@@ -37,10 +37,10 @@
             <td>{{cont.email}}</td>
             <td>
               <span class="action-buttons">
-                <button (click)="onEditCard(cont)">
+                <button (click)="onEditContact(cont)">
                   <span class="material-symbols-outlined"> edit </span>
                 </button>
-                <button (click)="onDeleteCard(cont)">
+                <button (click)="onDeleteContact(cont)">
                   <span class="material-symbols-outlined"> delete </span>
                 </button>
               </span>
@@ -51,7 +51,7 @@
     </table>
   </div>
   
-  @if(openAddContact()) {
-    <app-new-contact (close)="onCloseAddContact()" [action]="action()" [defaultValues]="defaultFormValues()"/>
+  @if(openFormModal()) {
+    <app-new-contact (close)="onCloseFormModal()" [action]="action()" [defaultValues]="defaultFormValues()"/>
   }
 </main>

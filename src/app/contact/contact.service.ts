@@ -8,6 +8,7 @@ export class ContactsService {
   allContacts = this.contacts.asReadonly();
   contacts$ = new BehaviorSubject<Contact[]>(this.contacts());
 
+  // function to fetch initial value of contacs array-- localstorage if populated otherwise, the hardcoded sample data
   private getInitialContacts(): Contact[] {
     const savedContacts = localStorage.getItem('contacts');
     return savedContacts
@@ -15,6 +16,7 @@ export class ContactsService {
       : this.getDefaultContacts();
   }
 
+  // sample data
   private getDefaultContacts(): Contact[] {
     return [
       {
@@ -74,24 +76,29 @@ export class ContactsService {
     ];
   }
 
+  // function to update local storage
   private updateLocalStorage(contacts: Contact[]): void {
     localStorage.setItem('contacts', JSON.stringify(contacts));
   }
 
+  // update the data contacts and observable after add, edit, and delete
   private updateContacts(contacts: Contact[]): void {
     this.contacts.set(contacts);
     this.contacts$.next(contacts);
     this.updateLocalStorage(contacts);
   }
 
+  // function to insert new data to the data array
   addContact(newContact: NewContact): void {
+    const randomWholeNumber = Math.floor(Math.random() * (20 - 10 + 1)) + 10;
     const updatedContacts = [
       ...this.contacts(),
-      { id: Math.random(), ...newContact },
+      { id: randomWholeNumber.toString(), ...newContact },
     ];
     this.updateContacts(updatedContacts);
   }
 
+  // function to update the selected contact
   editContact(updatedContact: Contact, id: string | number): void {
     const updatedContacts = this.contacts().map((contact) =>
       contact.id === id ? updatedContact : contact
@@ -99,6 +106,7 @@ export class ContactsService {
     this.updateContacts(updatedContacts);
   }
 
+  // function to delete the selected contact
   deleteContact(id: string | number): void {
     const updatedContacts = this.contacts().filter(
       (contact) => contact.id !== id
@@ -106,11 +114,13 @@ export class ContactsService {
     this.updateContacts(updatedContacts);
   }
 
+  // function to fetch information of selected contact
   getContactInfo(id: string) {
     const info = this.contacts().find((data) => data.id === id);
     return info;
   }
 
+  // function to format contact number from 09123456789 to 0912-345-67-89
   formatContactNumber(value: string|null|undefined) {
     if (!value) return value;
     const cleaned = value.replace(/\D/g, '');

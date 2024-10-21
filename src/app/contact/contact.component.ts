@@ -21,7 +21,7 @@ export class ContactComponent {
   private contactsService = inject(ContactsService);
   private alertService = inject(AlertService);
   
-  openAddContact = signal(false);
+  openFormModal = signal(false);
   action = signal<'add'|'edit'>('add');
   isCardView = signal(true);
   allContacts = this.contactsService.allContacts();
@@ -52,31 +52,31 @@ export class ContactComponent {
   }
 
   // function to open add modal
-  onOpenAddContact() {
+  onOpenFormModal() {
     this.action.set('add');
-    this.openAddContact.set(true);
+    this.openFormModal.set(true);
   }
 
   // closes add modal; resets form values
-  onCloseAddContact() {
+  onCloseFormModal() {
     this.defaultFormValues.set({
       id: '',
       name: '',
       email: '',
       contact_no: ''
     })
-    this.openAddContact.set(false)
+    this.openFormModal.set(false)
   }
 
   // opens edit form modal; set default values of form to selected info
-  onEditCard(info: Contact) {
+  onEditContact(info: Contact) {
     this.defaultFormValues.set(info)
     this.action.set('edit')
-    this.openAddContact.set(true);
+    this.openFormModal.set(true);
   }
 
   // function to delete contact info
-  onDeleteCard(info: Contact) {
+  onDeleteContact(info: Contact) {
     this.contactsService.deleteContact(info.id);
     this.alertService.showAlert("Successfully deleted contact!", "success");
   }

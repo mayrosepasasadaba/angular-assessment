@@ -6,7 +6,7 @@ import { ContactsService } from '../contact.service';
 import { AlertService } from '../../shared/alert/alert.service';
 
 
-// digits only validator for contact number
+// return error true if input is
 function elevenDigitsOnly(control: AbstractControl) {
   const isValid = /^\d{11}$/.test(control.value)
   if (isValid) {
@@ -15,6 +15,7 @@ function elevenDigitsOnly(control: AbstractControl) {
   return { elevenDigitsOnly: true };
 }
 
+// returns error true if the input is all white space
 function noWhiteSpace(control: AbstractControl) {
   const isWhitespace = (control.value || '').trim().length === 0;
   const isValid = !isWhitespace;
@@ -45,10 +46,10 @@ export class NewContactComponent implements OnInit {
         validators: [Validators.required, noWhiteSpace]
       }),
       email: new FormControl(this.defaultValues?.email, {
-        validators: [Validators.email, Validators.required]
+        validators: [Validators.required, Validators.email]
       }),
       contact_no: new FormControl(this.defaultValues?.contact_no, {
-        validators: [Validators.required, Validators.minLength(11), elevenDigitsOnly]
+        validators: [Validators.required, elevenDigitsOnly]
       }),
     })
   }

@@ -12,9 +12,10 @@ import { NgClass, NgIf } from '@angular/common';
 export class AlertComponent implements OnInit {
   private alertService = inject(AlertService);
   message = signal<string>('');
-  isVisible = signal(true);
   alertType = signal<'success' | 'error' | 'warning' | 'info'>('info');
+  isVisible = signal(true); // attempt to add alert popup animation
 
+  // listens to real time updates of the alertSubject
   ngOnInit() {
     this.alertService.alert$.subscribe((alert) => {
       this.message.set(alert.message);

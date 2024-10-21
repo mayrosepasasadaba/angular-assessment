@@ -5,12 +5,14 @@ import { BehaviorSubject, Subject } from 'rxjs';
   providedIn: 'root',
 })
 export class AlertService {
-  private alertSubject = new Subject<{ message: string; type: 'success' | 'error' | 'warning' | 'info' }>();
-  private isVisible = signal(false);
+  private alertSubject = new Subject<{ message: string; type: 'success' | 'error' | 'info' }>();
   alert$ = this.alertSubject.asObservable();
+
+  // attempt to add alert popup animation
+  private isVisible = signal(false);
   isVisible$ = new BehaviorSubject<boolean>(this.isVisible());
 
-  showAlert(message: string, type: 'success' | 'error' | 'warning' | 'info' = 'info') {
+  showAlert(message: string, type: 'success' | 'error' | 'info' = 'info') {
     this.alertSubject.next({ message, type });
     this.isVisible.set(true);
     this.isVisible$.next(true);
