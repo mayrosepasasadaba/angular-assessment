@@ -97,9 +97,9 @@ export class ContactsService {
   }
 
   // function to update the selected contact
-  editContact(updatedContact: Contact, id: string | number): void {
+  editContact(updatedContact: Contact, contactId: string | number): void {
     const updatedContacts = this.contacts().map((contact) =>
-      contact.id === id ? updatedContact : contact
+      contact.id === contactId ? {...contact, ...updatedContact} : contact
     );
     this.updateContacts(updatedContacts);
   }
