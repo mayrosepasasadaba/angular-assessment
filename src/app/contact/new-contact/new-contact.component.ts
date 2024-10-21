@@ -102,8 +102,6 @@ export class NewContactComponent implements OnInit {
         this.alertService.showAlert("Error adding a new contact", "error");
       }
     });
-    this.form.reset();
-    this.close.emit();
   }
 
   onSaveChanges() {
@@ -111,6 +109,7 @@ export class NewContactComponent implements OnInit {
       next: (response: Contact) => {
         this.alertService.showAlert("Changes saved", "success");
         this.contactsService.fetchAllContacts();
+        console.log("here")
       },
       complete: () => {
         this.form.reset();

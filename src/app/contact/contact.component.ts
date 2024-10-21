@@ -6,7 +6,6 @@ import { NewContactComponent } from "./new-contact/new-contact.component";
 import { Contact } from './contact.model';
 import { AlertService } from '../shared/alert/alert.service';
 import { RouterLink } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-contact',
@@ -36,15 +35,15 @@ export class ContactComponent {
   
   ngOnInit(): void {
     // Subscribe to the contacts observable to get real-time updates
-    this.contactsService.getAllContacts().subscribe((contacts) => {
+    const subscription = this.contactsService.contacts$.subscribe((contacts) => {
       this.allContacts.set(contacts);
     });
 
-    // this.destroyRef.onDestroy(() => {
-    //   subscription.unsubscribe()
-    // })
-
     this.contactsService.fetchAllContacts()
+
+    this.destroyRef.onDestroy(() => {
+      subscription.unsubscribe()
+    })
   }
 
   // selects between card view or table view
