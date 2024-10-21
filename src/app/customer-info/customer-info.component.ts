@@ -1,6 +1,7 @@
-import { Component, computed, inject, input } from '@angular/core';
+import { Component, computed, inject, input, signal } from '@angular/core';
 import { ContactsService } from '../contact/contact.service';
 import { RouterLink, RouterOutlet } from '@angular/router';
+import { Contact } from '../contact/contact.model';
 
 @Component({
   selector: 'app-customer-info',
@@ -12,7 +13,21 @@ import { RouterLink, RouterOutlet } from '@angular/router';
 export class CustomerInfoComponent {
   private contactsService = inject(ContactsService);
   contactId = input.required<string>();
-  userInfo = computed(() => this.contactsService.getContactInfo(this.contactId()));
+  userInfo = signal<Contact>({
+    id: '',
+    name: '',
+    email: '',
+    contact_no: '',
+  })
+  
+  ngOnInit() {
+    this.contactsService.getContactInfo(this.contactId()).subscribe({
+      next: (response) => {
+        this.userInfo.set(response)
+      }
+    })
+
+  }
 
   formatContactNumber(value: string|null|undefined) {
     return this.contactsService.formatContactNumber(value)

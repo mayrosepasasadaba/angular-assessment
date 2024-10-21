@@ -88,16 +88,38 @@ export class NewContactComponent implements OnInit {
     this.close.emit();
   }
 
-  onSubmit() {
-    if (this.action==="add") {
-      this.contactsService.addContact(this.form.value);
-      this.alertService.showAlert("Successfully added a new contact!", "success");
-    } else {
-      this.contactsService.editContact(this.form.value, this.defaultValues.id);
-      this.alertService.showAlert("Changes saved", "success");
-    }
-
+  onAddContact() {
+    this.contactsService.addContact(this.form.value).subscribe({
+      next: (response: Contact) => {
+        this.alertService.showAlert("Successfully added a new contact!", "success");
+        this.contactsService.fetchAllContacts();
+      },
+      complete: () => {
+        this.form.reset();
+        this.close.emit();
+      },
+      error: (error) => {
+        this.alertService.showAlert("Error adding a new contact", "error");
+      }
+    });
     this.form.reset();
     this.close.emit();
+  }
+
+  onSaveChanges() {
+    this.contactsService.editContact(this.form.value, this.defaultValues.id).subscribe({
+      next: (response: Contact) => {
+        this.alertService.showAlert("Changes saved", "success");
+        this.contactsService.fetchAllContacts();
+      },
+      complete: () => {
+        this.form.reset();
+        this.close.emit();
+      },
+      error: (error) => {
+        this.alertService.showAlert("Error updating contact", "error");
+      }
+    });
+    
   }
 }

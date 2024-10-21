@@ -6,6 +6,7 @@ import { NewContactComponent } from "./new-contact/new-contact.component";
 import { Contact } from './contact.model';
 import { AlertService } from '../shared/alert/alert.service';
 import { RouterLink } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-contact',
@@ -23,22 +24,27 @@ export class ContactComponent {
   openFormModal = signal(false);
   action = signal<'add'|'edit'>('add');
   isCardView = signal(true);
-  allContacts = this.contactsService.allContacts();
+  allContacts = signal<Contact[]>(this.contactsService.allContacts());
   defaultFormValues = signal<Contact>({
     id: '',
     name: '',
     email: '',
     contact_no: ''
   })
+  error: any;
+  destroyRef: any;
   
-
   ngOnInit(): void {
-    // Subscribe to the contacts$ observable to get real-time updates
-    this.contactsService.contacts$.subscribe(
-      (updatedContacts) => {
-        this.allContacts = updatedContacts;
-      }
-    );
+    // Subscribe to the contacts observable to get real-time updates
+    this.contactsService.getAllContacts().subscribe((contacts) => {
+      this.allContacts.set(contacts);
+    });
+
+    // this.destroyRef.onDestroy(() => {
+    //   subscription.unsubscribe()
+    // })
+
+    this.contactsService.fetchAllContacts()
   }
 
   // selects between card view or table view
@@ -76,7 +82,14 @@ export class ContactComponent {
 
   // function to delete contact info
   onDeleteContact(info: Contact) {
-    this.contactsService.deleteContact(info.id); 
-    this.alertService.showAlert("Successfully deleted contact!", "success");
+    this.contactsService.deleteContact(info.id).subscribe({
+      next: () => {
+        this.alertService.showAlert("Successfully deleted contact!", "success");
+        this.contactsService.fetchAllContacts();
+      },
+      error: (error) => {
+        this.alertService.showAlert(`Error deleting contact ${error}`, "error");
+      }
+    });
   }
 }

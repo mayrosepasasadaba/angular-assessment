@@ -21,8 +21,8 @@
 
     <div style="display: flex; justify-content: space-between;">
       <button (click)="onCancel()" class="cancel-button">Cancel</button>
-      <button (click)="onSubmit()" class="save-button" *ngIf="action==='add'" [disabled]="form.invalid">Add Contact</button>
-      <button (click)="onSubmit()" class="save-button" *ngIf="action==='edit'" [disabled]="form.invalid">Save Changes</button>
+      <button (click)="onAddContact()" class="save-button" *ngIf="action==='add'" [disabled]="form.invalid">Add Contact</button>
+      <button (click)="onSaveChanges()" class="save-button" *ngIf="action==='edit'" [disabled]="form.invalid">Save Changes</button>
     </div>
   </form>
 </dialog>

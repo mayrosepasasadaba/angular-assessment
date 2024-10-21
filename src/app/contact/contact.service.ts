@@ -1,6 +1,7 @@
-import { Injectable, signal } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { Contact, NewContact } from './contact.model';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 const defaultContacts = [
   {
@@ -61,61 +62,49 @@ const defaultContacts = [
 
 @Injectable({ providedIn: 'root' })
 export class ContactsService {
-  private contacts = signal<Contact[]>(this.getInitialContacts());
+  private contacts = signal<Contact[]>([]);
   allContacts = this.contacts.asReadonly();
   contacts$ = new BehaviorSubject<Contact[]>(this.contacts());
+  private http = inject(HttpClient);
+
+  private apiUrl = "http://localhost:3000/contacts"
 
 
-  // function to fetch initial value of contacs array-- localstorage if populated otherwise, the hardcoded sample data
-  private getInitialContacts(): Contact[] {
-    const savedContacts = localStorage.getItem('contacts');
-    return savedContacts
-      ? JSON.parse(savedContacts)
-      : defaultContacts;
+  getAllContacts() {
+    return this.http.get<Contact[]>(this.apiUrl).pipe(
+      tap({
+        next: (allContacts) => {
+          this.contacts.set(allContacts);
+          this.contacts$.next(allContacts);
+        }
+      })
+    );
   }
 
-  // function to update local storage
-  private updateLocalStorage(contacts: Contact[]): void {
-    localStorage.setItem('contacts', JSON.stringify(contacts));
-  }
-
-  // update the data contacts and observable after add, edit, and delete
-  private updateContacts(updatedContacts: Contact[]): void {
-    this.contacts.set(updatedContacts);
-    this.contacts$.next(updatedContacts);
-    this.updateLocalStorage(updatedContacts);
-  }
-
-  // function to insert new data to the data array
-  addContact(newContact: NewContact): void {
+  // Method to insert new data to the data array
+  addContact(newContact: NewContact) {
     const randomWholeNumber = Math.floor(Math.random() * (20 - 10 + 1)) + 10;
-    const updatedContacts = [
-      ...this.contacts(),
-      { id: randomWholeNumber.toString(), ...newContact },
-    ];
-    this.updateContacts(updatedContacts);
+    const newData = {
+      id: randomWholeNumber.toString(),
+      ...newContact
+    }
+    return this.http.post<Contact>(this.apiUrl, newData);
   }
 
-  // function to update the selected contact
-  editContact(updatedContact: Contact, contactId: string | number): void {
-    const updatedContacts = this.contacts().map((contact) =>
-      contact.id === contactId ? {...contact, ...updatedContact} : contact
-    );
-    this.updateContacts(updatedContacts);
+  // Method to edit an existing contact
+  editContact(updatedContact: Contact, contactId: string|number): Observable<Contact> {
+    return this.http.put<Contact>(`${this.apiUrl}/${contactId}`, updatedContact);
   }
 
-  // function to delete the selected contact
-  deleteContact(id: string | number): void {
-    const updatedContacts = this.contacts().filter(
-      (contact) => contact.id !== id
-    );
-    this.updateContacts(updatedContacts);
+  // Method to delete the selected contact
+  deleteContact(contactId: string | number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${contactId}`);
   }
+
 
   // function to fetch information of selected contact
-  getContactInfo(id: string) {
-    const info = this.contacts().find((data) => data.id === id);
-    return info;
+  getContactInfo(contactId: string | number): Observable<Contact> {
+    return this.http.get<Contact>(`${this.apiUrl}/${contactId}`);
   }
 
   // function to format contact number from 09123456789 to 0912-345-67-89
@@ -125,5 +114,14 @@ export class ContactsService {
     if (cleaned.length !== 11) return value;
     const formatted = `${cleaned.slice(0, 4)}-${cleaned.slice(4, 7)}-${cleaned.slice(7, 9)}-${cleaned.slice(9, 11)}`;
     return formatted;
+  }
+
+  fetchAllContacts(): void {
+    this.getAllContacts().subscribe({
+      next: (allContacts) => {
+      },
+      error: (error) => {
+      }
+    });
   }
 }
