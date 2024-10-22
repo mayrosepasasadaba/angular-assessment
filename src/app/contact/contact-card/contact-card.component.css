@@ -30,15 +30,25 @@ a {
 
 .action-buttons {
   display: flex;
-    justify-content: end;
-    gap: 1em;
+  justify-content: end;
+  gap: 1em;
 
-    button {
-      background-color: transparent;
-      border: none;
-    }
+  button {
+    background-color: transparent;
+    border: none;
+  }
 
-    .material-symbols-outlined {
-        font-size: 1.4em;
-    }
+  .material-symbols-outlined {
+    font-size: 1.4em;
+  }
+}
+
+@media (max-width: 412px) {
+  .contact-card {
+    font-size: 3vw;
+  }
+
+  .material-symbols-outlined {
+    font-size: 4em !important;
+  }
 }

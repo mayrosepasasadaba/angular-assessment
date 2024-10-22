@@ -109,7 +109,6 @@ export class NewContactComponent implements OnInit {
       next: (response: Contact) => {
         this.alertService.showAlert("Changes saved", "success");
         this.contactsService.fetchAllContacts();
-        console.log("here")
       },
       complete: () => {
         this.form.reset();

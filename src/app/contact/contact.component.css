@@ -91,12 +91,34 @@ a {
 }
 
 @media (max-width: 412px) {
+  h2 {
+    font-size: 4vw;
+  }
+
   .container {
       grid-template-columns: 2fr 1fr;
+
+      p {
+        font-size: 2vw;
+      }
   }
 
   button {
-      width: 90%;
-      /* font-size: 5pt !important; */
+      width: 80% !important;
+      font-size: 2vw;
+  }
+
+  .contact-card-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(80em, 1fr));
+    grid-gap: 10px;
+  }
+
+  .toggle-icons .material-symbols-outlined {
+    font-size: 2em !important;
+  }
+
+  table {
+    font-size: 1.5vw;
   }
 }
